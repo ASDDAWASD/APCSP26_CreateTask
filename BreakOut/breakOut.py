@@ -14,7 +14,7 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 running = True
 
-paddle = paddle.Paddle(screen,SCREEN_SIZE[0]/2, SCREEN_SIZE[1]-100)
+paddle = paddle.Paddle(screen,SCREEN_SIZE[0]/2, SCREEN_SIZE[1]-50)
 ball = ball.Ball(screen, SCREEN_SIZE[0]/2, SCREEN_SIZE[1]/2, random.choice([-1,1])*random.randint(35,145),1)
 
 
@@ -30,10 +30,12 @@ while running:
         paddle.move(1)
 
     ball.move()
+    if paddle.collideBall(ball):
+        ball.vel[1] = 0-ball.vel[1]
+
     paddle.draw()
     ball.draw()
 
-    print(paddle.x)
 
     pygame.display.flip()
 
