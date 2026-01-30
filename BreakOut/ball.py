@@ -8,6 +8,7 @@ class Ball:
         self.y = y
         self.radius = 10
         self.hitbox = pygame.Rect(self.x-self.radius, self.y-self.radius, self.radius*2, self.radius*2)
+        self.hitpoints = ((self.x+self.radius,self.y),(self.x,self.y-self.radius),(self.x-self.radius,self.y,(self.x,self.y+self.radius)))
         self.vel =[math.cos(math.radians(dir))*speed,math.sin(math.radians(dir))*speed]
         self.screen = screen
 
@@ -21,6 +22,7 @@ class Ball:
             self.vel[1] = 0-self.vel[1]
             self.y = max(0,min(self.y,self.screen.get_height()-self.radius))
         self.hitbox = pygame.Rect(self.x-self.radius, self.y-self.radius, self.radius*2, self.radius*2)
+        self.hitpoints = ((self.x+self.radius,self.y),(self.x,self.y-self.radius),(self.x-self.radius,self.y,(self.x,self.y+self.radius)))
         
 
     def draw(self):

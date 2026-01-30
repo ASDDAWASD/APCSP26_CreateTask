@@ -30,18 +30,15 @@ while running:
         paddle.move(1)
 
     ball.move()
-    if paddle.collideBall(ball):
-        ball.vel[1] = 0-ball.vel[1]
-
-    paddle.draw()
-    ball.draw()
+    paddle.collideBall(ball)
     for i in bricks:
         if i:
             i.collideBall(ball)
             i.draw(screen)
 
-
-
+    paddle.draw()
+    ball.draw()
+    
     pygame.display.flip()
 
 

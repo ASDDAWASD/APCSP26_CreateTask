@@ -12,12 +12,18 @@ class Brick:
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, self.hitbox)
 
-    def collideBall(self, ball):
-        if self.hitbox.colliderect(ball.hitbox):
-            bricks[self.idx]=False
-            return True
-        return False
-
+    def collideBall(self,ball):
+        for i in range(4):
+            if self.hitbox.collidepoint(ball.hitpoints[i]):
+                bricks[self.idx]=False
+                if(i==0 or i==1):
+                    ball.vel[0] = 0-ball.vel[0]
+                    return True
+                else:
+                    ball.vel[1] = 0-ball.vel[1]
+                return True
+            return False
+    
 def generateBricks(rows,cols,screen):
     brickWidth = (0.9*screen.get_width())/cols
     brickHeight = (0.9*screen.get_height())/(2*rows)

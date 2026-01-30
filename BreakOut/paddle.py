@@ -19,7 +19,9 @@ class Paddle:
         pygame.draw.rect(self.screen, (255,255,255), self.hitbox)
     
     def collideBall(self,ball):
-        if self.hitbox.colliderect(ball.hitbox):
-            return True
-        return False
+        for i in range(4):
+            if self.hitbox.collidepoint(ball.hitpoints[i]):
+                ball.vel[1] = 0-ball.vel[1]
+                return True
+            return False
 
