@@ -36,7 +36,9 @@ while running:
     paddle.draw()
     ball.draw()
     for i in bricks:
-        i.draw(screen)
+        if i:
+            i.collideBall(ball)
+            i.draw(screen)
 
 
 
