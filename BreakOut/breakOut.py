@@ -38,7 +38,7 @@ while running:
 
     paddle.draw()
     ball.draw()
-    
+
     pygame.display.flip()
 
 

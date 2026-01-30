@@ -8,7 +8,7 @@ class Ball:
         self.y = y
         self.radius = 10
         self.hitbox = pygame.Rect(self.x-self.radius, self.y-self.radius, self.radius*2, self.radius*2)
-        self.hitpoints = ((self.x+self.radius,self.y),(self.x,self.y-self.radius),(self.x-self.radius,self.y,(self.x,self.y+self.radius)))
+        self.hitpoints = ((self.x,self.y-self.radius),(self.x-self.radius,self.y,(self.x,self.y+self.radius)),(self.x+self.radius,self.y))
         self.vel =[math.cos(math.radians(dir))*speed,math.sin(math.radians(dir))*speed]
         self.screen = screen
 

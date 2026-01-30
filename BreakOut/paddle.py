@@ -6,7 +6,7 @@ class Paddle:
         self.x = x
         self.y = y
         self.screen = screen
-        self.length = 100
+        self.length = 150
         self.width = 10
         self.hitbox = pygame.Rect(self.x, self.y, self.length, self.width)
 
