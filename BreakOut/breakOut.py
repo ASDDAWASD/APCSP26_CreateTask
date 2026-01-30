@@ -16,7 +16,7 @@ running = True
 
 paddle = paddle.Paddle(screen,SCREEN_SIZE[0]/2, SCREEN_SIZE[1]-50)
 ball = ball.Ball(screen, SCREEN_SIZE[0]/2, SCREEN_SIZE[1]/2, random.choice([-1,1])*random.randint(35,145),1)
-
+bricks= brick.generateBricks(5,10,screen)
 
 while running:
     screen.fill(BLACK)
@@ -35,6 +35,9 @@ while running:
 
     paddle.draw()
     ball.draw()
+    for i in bricks:
+        i.draw(screen)
+
 
 
     pygame.display.flip()

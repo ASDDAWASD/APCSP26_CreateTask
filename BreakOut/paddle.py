@@ -22,3 +22,4 @@ class Paddle:
         if self.hitbox.colliderect(ball.hitbox):
             return True
         return False
+
