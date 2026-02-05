@@ -18,7 +18,7 @@ class Ball:
         if self.x <= 0 or self.x >= self.screen.get_width()-self.radius:
             self.vel[0] = 0-self.vel[0]
             self.x = max(0,min(self.x,self.screen.get_width()-self.radius))
-        if self.y <= 0 or self.y >= self.screen.get_height()-self.radius:
+        if self.y <= 0:
             self.vel[1] = 0-self.vel[1]
             self.y = max(0,min(self.y,self.screen.get_height()-self.radius))
         self.hitbox = pygame.Rect(self.x-self.radius, self.y-self.radius, self.radius*2, self.radius*2)
