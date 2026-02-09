@@ -16,11 +16,12 @@ class Brick:
         for i in range(4):
             if self.hitbox.collidepoint(ball.hitpoints[i]):
                 bricks[self.idx]=False
-                if(i==0 or i==1):
-                    ball.vel[0] = 0-ball.vel[0]
+                if(i==1 or i==3):
+                    ball.vel[1] = 0-ball.vel[1]
                     return True
                 else:
-                    ball.vel[1] = 0-ball.vel[1]
+                    ball.vel[0] = 0-ball.vel[0]
+                    
                 return True
             return False
     
@@ -30,5 +31,7 @@ def generateBricks(rows,cols,screen):
     margin=((0.1*screen.get_width()/cols),(0.1*screen.get_height()/rows))
     for i in range(rows):
         for j in range(cols):
-            bricks.append(Brick(pygame.Rect(j*(brickWidth + margin[0]), i*(brickHeight + margin[1]), brickWidth, brickHeight),((i*cols)+j)))
+            bricks.append(Brick(
+                pygame.Rect(j*(brickWidth + margin[0]), i*(brickHeight + margin[1]), brickWidth, brickHeight),
+                ((i*cols)+j)))
     return bricks

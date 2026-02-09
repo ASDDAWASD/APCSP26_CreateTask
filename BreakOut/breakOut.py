@@ -67,7 +67,10 @@ while running:
                     running = False
                     screen.fill(BLACK)
                     winGame = font.render(f'You Win! Final Score: {points}', True, WHITE)
-                    screen.blit(winGame, (SCREEN_SIZE[0]/2 - winGame.get_width()/2, SCREEN_SIZE[1]/2 - winGame.get_height()/2))
+                    screen.blit(
+                        winGame,
+                        (SCREEN_SIZE[0]/2 - winGame.get_width()/2, SCREEN_SIZE[1]/2 - winGame.get_height()/2)
+                        )
                     pygame.display.flip()
                     time.sleep(3)
             i.draw(screen)
