@@ -17,7 +17,7 @@ class Player():
         self.screen = screen
         
 
-    def move(self,controls={"thrust":False, "right":False, "left":False},speed=10,dt=0):
+    def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
         self.vel*=0.95
         unit=Vector2.normalize(self.vel)*dt*speed
