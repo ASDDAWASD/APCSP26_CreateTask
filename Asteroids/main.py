@@ -22,10 +22,37 @@ clock=pygame.time.Clock()
 FPS = 60
 dt=clock.tick(FPS)/1000
 
+def makeAsteroid(scale=1,speed=1):
+    spawnx = random.random()*SCREEN_SIZE[0]
+    spawny = random.random()*SCREEN_SIZE[1]
+    velx = random.uniform(-1,1)*speed
+    vely = random.uniform(-1,1)*speed
+    while True:
+        spawnx-=velx
+        spawny-=vely
+        if (
+            spawnx < (0-scale*300) or
+            spawny < (0-scale*300) or
+            spawnx > SCREEN_SIZE[0]+scale or
+            spawny > SCREEN_SIZE[1]+scale
+            ):
+            break
+    
+    asteroid.asteroids.append(asteroid.Asteroid(screen,(spawnx,spawny),(velx,vely),scale))
+
+def shoot():
+    bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.vel.normalize())))
+
+
 #initialize player
 player = player.Player(screen, (SCREEN_SIZE[0]/2,SCREEN_SIZE[1]/2), 0.4)
+
+#initialize asteroids
 for i in range(5):
-    asteroid.asteroids.append(asteroid.Asteroid(screen,(random.random()*SCREEN_SIZE[0],random.random()*SCREEN_SIZE[1])))
+    makeAsteroid(scale=0.3,speed=0.5)
+
+MAKE_ASTEROID = pygame.USEREVENT + 1
+pygame.time.set_timer(MAKE_ASTEROID,8000)
 
 while running:
     screen.fill(BLACK)
@@ -34,8 +61,11 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.vel.normalize())))
+                shoot()
                 points += 1
+        if event.type == MAKE_ASTEROID:
+            makeAsteroid(scale=0.3,speed=0.5)
+
     keys = pygame.key.get_pressed()
 
 
@@ -49,7 +79,7 @@ while running:
     for i in bullet.bullets:
         i.move()
     for i in asteroid.asteroids:
-        i.move
+        i.move()
 
     #draw sprites
     player.draw()
@@ -61,6 +91,7 @@ while running:
     screen.blit(score,(10, SCREEN_SIZE[1]-(score.get_height())-5))
 
     pygame.display.flip()
+    print(len(asteroid.asteroids))
 
     #clock tick
     dt=clock.tick(FPS)/1000
