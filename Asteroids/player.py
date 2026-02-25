@@ -16,8 +16,7 @@ class Player():
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
         self.screen = screen
-        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*scale,37*scale)
-        
+        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],80*scale,80*scale)        
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
@@ -31,7 +30,7 @@ class Player():
             self.accel+=unit.rotate(-90)
         self.vel+=self.accel
         self.pos+=self.vel
-        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*self.scale,37*self.scale)
+        self.hurtbox = pygame.rect.Rect(self.pos[0]-15,self.pos[1]-15,120*self.scale,120*self.scale)
     
     def draw(self):
         dir=180-self.vel.as_polar()[1]
