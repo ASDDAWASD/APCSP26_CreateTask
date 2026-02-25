@@ -14,7 +14,7 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 running = True
 points = 0
-font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30) #font source: https://www.dafont.com/minecraft.font
+font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
 points = 0
 
 #intialize clock for DT
@@ -49,7 +49,7 @@ player = player.Player(screen, (SCREEN_SIZE[0]/2,SCREEN_SIZE[1]/2), 0.4)
 
 #initialize asteroids
 for i in range(5):
-    makeAsteroid(scale=0.3,speed=0.5)
+    makeAsteroid(scale=0.5,speed=0.5)
 
 MAKE_ASTEROID = pygame.USEREVENT + 1
 pygame.time.set_timer(MAKE_ASTEROID,8000)
@@ -62,9 +62,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 shoot()
-                points += 1
         if event.type == MAKE_ASTEROID:
-            makeAsteroid(scale=0.3,speed=0.5)
+            makeAsteroid(scale=0.5,speed=0.5)
 
     keys = pygame.key.get_pressed()
 
@@ -80,6 +79,14 @@ while running:
         i.move()
     for i in asteroid.asteroids:
         i.move()
+    
+
+    #check collisions
+    for i in asteroid.asteroids:
+        for j in bullet.bullets:
+            check = i.collideBullet(j)
+            if check:
+                points += check
 
     #draw sprites
     player.draw()
@@ -88,10 +95,9 @@ while running:
     for i in asteroid.asteroids:
         i.draw()
     score = font.render(str(points),True,WHITE)
-    screen.blit(score,(10, SCREEN_SIZE[1]-(score.get_height())-5))
+    screen.blit(score,(10, SCREEN_SIZE[1]-(score.get_height())))
 
     pygame.display.flip()
-    print(len(asteroid.asteroids))
 
     #clock tick
     dt=clock.tick(FPS)/1000

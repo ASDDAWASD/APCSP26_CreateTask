@@ -10,11 +10,13 @@ class Player():
             ]
         self.costumes[0] = pygame.transform.scale_by(self.costumes[0], scale)
         self.costumes[1] = pygame.transform.scale_by(self.costumes[1], scale)
+        self.scale = scale
         self.size = (self.costumes[0].get_size())
         self.pos = Vector2(pos)
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
         self.screen = screen
+        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*scale,37*scale)
         
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
@@ -29,6 +31,7 @@ class Player():
             self.accel+=unit.rotate(-90)
         self.vel+=self.accel
         self.pos+=self.vel
+        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*self.scale,37*self.scale)
     
     def draw(self):
         dir=180-self.vel.as_polar()[1]
@@ -36,3 +39,4 @@ class Player():
             self.screen.blit(pygame.transform.rotate(self.costumes[0],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
         else:
             self.screen.blit(pygame.transform.rotate(self.costumes[1],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
+        pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5)
