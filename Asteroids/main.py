@@ -82,12 +82,14 @@ while running:
     
 
     #check collisions
+    print(player.immune)
     for i in asteroid.asteroids:
         for j in bullet.bullets:
             check = i.collideBullet(j)
             if check:
                 points += check
-
+    player.collideAsteroid()
+    
     #draw sprites
     player.draw()
     for i in bullet.bullets:

@@ -5,7 +5,6 @@ from pygame.math import Vector2
 
 pygame.mixer.init()
 asteroids=[]
-SFX_pop = [pygame.mixer.Sound("Asteroids/assets/SFX/explosion_1.wav")]
 
 MAKE_ASTEROID = pygame.USEREVENT + 1
 
@@ -19,6 +18,7 @@ class Asteroid():
         self.pos = Vector2(pos)
         self.vel = Vector2(vel)
         self.hitbox = pygame.Rect(self.pos[0]+(100*scale),self.pos[1]+(100*scale),200*scale,200*scale)
+        self.SFX_pop = [pygame.mixer.Sound("Asteroids/assets/SFX/explosion_1.wav")]
         self.type = type
         
 
@@ -39,7 +39,7 @@ class Asteroid():
 
     def draw(self):
         self.screen.blit(self.sprite, self.pos)
-        pygame.draw.rect(self.screen,(255,0,0),self.hitbox,5)
+        # pygame.draw.rect(self.screen,(255,0,0),self.hitbox,5)
 
     def collideBullet(self,checkbullet):
         if self.hitbox.collidepoint(checkbullet.pos):
@@ -65,6 +65,6 @@ class Asteroid():
                     ))
                 pygame.event.post(pygame.event.Event(MAKE_ASTEROID))
            
-            SFX_pop[random.randint(0,len(SFX_pop)-1)].play()
+            self.SFX_pop[random.randint(0,len(self.SFX_pop)-1)].play()
             return aux.type
         return 0

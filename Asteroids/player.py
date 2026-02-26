@@ -1,6 +1,7 @@
 import pygame
 from pygame.math import Vector2
-import math
+import asteroid
+pygame.mixer.init()
 
 class Player():
     def __init__(self, screen, pos=(0,0), scale = 1):
@@ -16,8 +17,10 @@ class Player():
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
         self.screen = screen
-        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*scale,37*scale)
-        
+        self.hurtbox = pygame.rect.Rect(0,0,0,0)
+        self.lives = 3
+        self.immune = 0
+        self.hurt = pygame.mixer.Sound("Asteroids/assets/SFX/crash.wav")
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
@@ -31,12 +34,34 @@ class Player():
             self.accel+=unit.rotate(-90)
         self.vel+=self.accel
         self.pos+=self.vel
-        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*self.scale,37*self.scale)
+        if self.pos[0] < 0:
+            self.pos[0] = self.screen.get_width()
+        elif self.pos[0] > self.screen.get_width():
+            self.pos[0] = 0
+        if self.pos[1] < 0:
+            self.pos[1] = self.screen.get_height()
+        elif self.pos[1] > self.screen.get_height():
+            self.pos[1] = 0
+
+        self.hurtbox = pygame.rect.Rect(self.pos[0]-15,self.pos[1]-15,120*self.scale,120*self.scale)
     
     def draw(self):
+        if (self.immune//10)%2:
+            return
         dir=180-self.vel.as_polar()[1]
         if self.accel.magnitude() == 0.0:
             self.screen.blit(pygame.transform.rotate(self.costumes[0],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
         else:
             self.screen.blit(pygame.transform.rotate(self.costumes[1],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
-        pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5)
+        # pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5)
+
+    def collideAsteroid(self):
+        if not self.immune:
+            for i in asteroid.asteroids:
+                if self.hurtbox.colliderect(i.hitbox):
+                    self.immune = 120
+                    self.lives -= 1
+                    self.hurt.play()
+
+        if self.immune > 0:
+            self.immune -= 1
