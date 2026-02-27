@@ -31,7 +31,6 @@ class Asteroid():
             self.pos[0] > (self.screen.get_width()+self.scale*300) or
             self.pos[1] > (self.screen.get_height()+self.scale*300)
             ):
-            print(len(asteroids),self.idx)
             for i in asteroids:
                 if i.idx > self.idx:
                     i.idx-=1
