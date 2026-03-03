@@ -18,6 +18,8 @@ points = 0
 font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
 points = 0
 
+# with open("highscore.txt")
+
 #intialize clock for DT
 clock=pygame.time.Clock()
 FPS = 60
@@ -152,7 +154,7 @@ while running:
 
 #fade screen out
 fader = pygame.Surface(SCREEN_SIZE,pygame.SRCALPHA)
-for i in range(256):
+for i in range(100):
     fader.fill((0,0,0,i))
     screen.blit(fader,(0,0))
 
@@ -160,13 +162,23 @@ for i in range(256):
     dt=clock.tick(FPS)/1000
 
 #display game over screen
+with open("Asteroids/highscore.txt","r+") as file:
+    highscore = int(file.read())
+    if points > highscore:
+        highscore = points
+        file.truncate()
+        file.write(str(highscore))
+    displayhigh = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30).render(f"High Score: {highscore}",True,WHITE)
+print(highscore)
 screen.fill(BLACK)
 score = font.render(f"Game Over! Score: {str(points)}",True,WHITE)
 
 #fade in game over screen
-for i in range(256):
+for i in range(100):
     score.set_alpha(i)
+    displayhigh.set_alpha(i)
     screen.blit(score,((SCREEN_SIZE[0]-score.get_width())/2,(SCREEN_SIZE[1]-score.get_height())/2))
+    screen.blit(displayhigh,((SCREEN_SIZE[0]-displayhigh.get_width())/2,SCREEN_SIZE[1]-displayhigh.get_height()))
 
     pygame.display.flip()
     dt=clock.tick(FPS)/1000
