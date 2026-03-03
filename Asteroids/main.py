@@ -44,7 +44,7 @@ def makeAsteroid(scale=1,speed=1):
     asteroid.asteroids.append(asteroid.Asteroid(screen,(spawnx,spawny),(velx,vely),scale))
 
 def shoot():
-    bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.vel.normalize())))
+    bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.dir)))
 
 
 #initialize player
@@ -80,7 +80,7 @@ while running and 0 in check.values():
         "thrust":keys[pygame.K_UP],
         "right":keys[pygame.K_RIGHT],
         "left":keys[pygame.K_LEFT]
-        },15,dt)
+        },5,dt)
     for i in bullet.bullets:
         i.move()
 
@@ -120,7 +120,7 @@ while running:
         "thrust":keys[pygame.K_UP],
         "right":keys[pygame.K_RIGHT],
         "left":keys[pygame.K_LEFT]
-        },15,dt)
+        },5,dt)
 
     for i in bullet.bullets:
         i.move()
@@ -166,6 +166,7 @@ with open("Asteroids/highscore.txt","r+") as file:
     highscore = int(file.read())
     if points > highscore:
         highscore = points
+        file.seek(0)
         file.truncate()
         file.write(str(highscore))
     displayhigh = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30).render(f"High Score: {highscore}",True,WHITE)
