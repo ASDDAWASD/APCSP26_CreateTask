@@ -1,6 +1,7 @@
 import pygame
 from pygame.math import Vector2
 import asteroid
+import math
 pygame.mixer.init()
 PLAYER_DEATH = pygame.USEREVENT + 2
 
@@ -17,6 +18,7 @@ class Player():
         self.pos = Vector2(pos)
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
+        self.dir = Vector2(1,0)
         self.screen = screen
         self.hurtbox = pygame.rect.Rect(0,0,0,0)
         self.lives = 3
@@ -27,16 +29,15 @@ class Player():
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
-        self.vel*=0.95
-        unit=Vector2.normalize(self.vel)*dt*speed
-        if controls["thrust"]:
-            self.accel=unit
-            # self.thrust.play()
+        self.vel*=0.99
         if controls["right"]:
-            self.accel+=unit.rotate(90)
+            self.dir = self.dir.rotate(5)
         if controls["left"]:
-            self.accel+=unit.rotate(-90)
-        self.vel+=self.accel
+            self.dir = self.dir.rotate(-5)
+        if controls["thrust"]:
+            self.accel=speed*dt*self.dir
+            # self.thrust.play()
+        self.vel = self.vel+self.accel
         self.pos+=self.vel
         if self.pos[0] < 0:
             self.pos[0] = self.screen.get_width()
@@ -52,7 +53,7 @@ class Player():
     def draw(self):
         if (self.immune//10)%2:
             return
-        dir=180-self.vel.as_polar()[1]
+        dir=180-self.dir.as_polar()[1]
         if self.accel.magnitude() == 0.0:
             self.screen.blit(pygame.transform.rotate(self.costumes[0],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
         else:
