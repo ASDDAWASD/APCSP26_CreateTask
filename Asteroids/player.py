@@ -66,9 +66,10 @@ class Player():
                     self.immune = 120
                     self.lives -= 1
                     self.hurt.play()
+                    break
         if self.immune > 0:
             self.immune -= 1
-        if self.lives == 0:
+        if self.lives <= 0:
             pygame.event.post(pygame.event.Event(PLAYER_DEATH))
 
     def drawLives(self):

@@ -152,7 +152,7 @@ while running:
 
 #fade screen out
 fader = pygame.Surface(SCREEN_SIZE,pygame.SRCALPHA)
-for i in range(256):
+for i in range(120):
     fader.fill((0,0,0,i))
     screen.blit(fader,(0,0))
 
@@ -164,7 +164,7 @@ screen.fill(BLACK)
 score = font.render(f"Game Over! Score: {str(points)}",True,WHITE)
 
 #fade in game over screen
-for i in range(256):
+for i in range(120):
     score.set_alpha(i)
     screen.blit(score,((SCREEN_SIZE[0]-score.get_width())/2,(SCREEN_SIZE[1]-score.get_height())/2))
 
