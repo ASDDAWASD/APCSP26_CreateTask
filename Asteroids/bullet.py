@@ -3,6 +3,7 @@ from pygame.math import Vector2
 
 pygame.mixer.init()
 bullets=[]
+ammo = 5
 shoot = pygame.mixer.Sound("Asteroids/assets/SFX/laserShoot.wav")
 
 class Bullet():

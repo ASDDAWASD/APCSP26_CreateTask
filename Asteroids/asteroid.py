@@ -6,7 +6,7 @@ from pygame.math import Vector2
 pygame.mixer.init()
 asteroids=[]
 
-MAKE_ASTEROID = pygame.USEREVENT + 1
+MAKE_ASTEROID = pygame.USEREVENT + 2
 
 class Asteroid():
     def __init__(self,screen,pos,vel,scale=1,type=3):
