@@ -19,14 +19,15 @@ class Player():
         self.pos = Vector2(pos)
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
-        self.dir = Vector2(1,0)
+        self.dir = Vector2(0,-1)
         self.screen = screen
         self.hurtbox = pygame.rect.Rect(0,0,0,0)
         self.lives = 3
         self.immune = 0
         self.hurt = pygame.mixer.Sound("Asteroids/assets/SFX/crash.wav")
+        self.channel = pygame.mixer.Channel(0)
         self.thrust = pygame.mixer.Sound("Asteroids/assets/SFX/thrust.wav")
-        self.thrust.set_volume(0.5)
+        # self.thrust.set_volume(0.5)
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
@@ -37,7 +38,7 @@ class Player():
             self.dir = self.dir.rotate(-5)
         if controls["thrust"]:
             self.accel=speed*dt*self.dir
-            self.thrust.play()
+            self.channel.play(self.thrust)
         self.vel = self.vel+self.accel
         self.pos+=self.vel
         if self.pos[0] < 0:

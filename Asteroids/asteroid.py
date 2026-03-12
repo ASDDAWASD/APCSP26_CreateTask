@@ -18,6 +18,7 @@ class Asteroid():
         self.pos = Vector2(pos)
         self.vel = Vector2(vel)
         self.hitbox = pygame.Rect(self.pos[0]+(100*scale),self.pos[1]+(100*scale),200*scale,200*scale)
+        self.channel = pygame.mixer.Channel(1)
         self.SFX_pop = [pygame.mixer.Sound("Asteroids/assets/SFX/explosion_1.wav")]
         self.type = type
         
@@ -64,6 +65,6 @@ class Asteroid():
                     ))
                 pygame.event.post(pygame.event.Event(MAKE_ASTEROID))
            
-            self.SFX_pop[random.randint(0,len(self.SFX_pop)-1)].play()
+            self.channel.play(self.SFX_pop[random.randint(0,len(self.SFX_pop)-1)])
             return aux.type
         return 0
