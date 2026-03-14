@@ -18,7 +18,7 @@ class Player():
         self.pos = Vector2(pos)
         self.vel = Vector2(0,-1)
         self.accel = Vector2(0,0)
-        self.dir = Vector2(1,0)
+        self.dir = Vector2(0,-1)
         self.screen = screen
         self.hurtbox = pygame.rect.Rect(0,0,0,0)
         self.lives = 3
