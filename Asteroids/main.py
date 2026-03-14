@@ -17,6 +17,7 @@ running = True
 points = 0
 font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
 points = 0
+reloading = False
 
 # with open("highscore.txt")
 
@@ -44,14 +45,24 @@ def makeAsteroid(scale=1,speed=1):
     asteroid.asteroids.append(asteroid.Asteroid(screen,(spawnx,spawny),(velx,vely),scale))
 
 def shoot():
-    bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.dir)))
+    global reloading
+    if bullet.ammo >0:
+        bullet.bullets.append(bullet.Bullet(screen,player.pos,player.vel+(10*player.dir)))
+        bullet.ammo -= 1
+    if bullet.ammo == 0:
+        if not reloading:
+            reloading = True
+            pygame.time.set_timer(RELOAD, 3000, loops = 1)
 
 
 #initialize player
 player = player.Player(screen, (SCREEN_SIZE[0]/2,SCREEN_SIZE[1]/2), 0.4)
 
-MAKE_ASTEROID = pygame.USEREVENT + 1
-PLAYER_DEATH = pygame.USEREVENT + 2
+
+PLAYER_DEATH = pygame.USEREVENT + 1
+MAKE_ASTEROID = pygame.USEREVENT + 2
+RELOAD = pygame.USEREVENT + 3
+
 pygame.time.set_timer(MAKE_ASTEROID,8000)
 
 #instructions screen
@@ -109,6 +120,9 @@ while running:
                 shoot()
         if event.type == MAKE_ASTEROID:
             makeAsteroid(scale=0.5,speed=0.5)
+        if event.type == RELOAD:
+            bullet.ammo = 5
+            reloading = False
         if event.type == PLAYER_DEATH:
             running = False
 
@@ -135,7 +149,6 @@ while running:
             if check:
                 points += check
     player.collideAsteroid()
-    print(player.lives)
     
     #draw sprites
     player.draw()
@@ -146,6 +159,10 @@ while running:
     player.drawLives()
     score = font.render(str(points),True,WHITE)
     screen.blit(score,(10, SCREEN_SIZE[1]-(score.get_height())))
+
+    for i in range(bullet.ammo):
+            counter = pygame.rect.Rect(SCREEN_SIZE[0]-20*(i+1),20,5,40)
+            pygame.draw.rect(screen, WHITE, counter)
 
     pygame.display.flip()
 
@@ -170,7 +187,6 @@ with open("Asteroids/highscore.txt","r+") as file:
         file.truncate()
         file.write(str(highscore))
     displayhigh = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30).render(f"High Score: {highscore}",True,WHITE)
-print(highscore)
 screen.fill(BLACK)
 score = font.render(f"Game Over! Score: {str(points)}",True,WHITE)
 

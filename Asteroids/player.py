@@ -3,7 +3,8 @@ from pygame.math import Vector2
 import asteroid
 import math
 pygame.mixer.init()
-PLAYER_DEATH = pygame.USEREVENT + 2
+PLAYER_DEATH = pygame.USEREVENT + 1
+
 
 class Player():
     def __init__(self, screen, pos=(0,0), scale = 1):
@@ -24,8 +25,9 @@ class Player():
         self.lives = 3
         self.immune = 0
         self.hurt = pygame.mixer.Sound("Asteroids/assets/SFX/crash.wav")
+        self.channel = pygame.mixer.Channel(0)
         self.thrust = pygame.mixer.Sound("Asteroids/assets/SFX/thrust.wav")
-        self.thrust.set_volume(0.5)
+        # self.thrust.set_volume(0.5)
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
         self.accel*=0
@@ -36,7 +38,7 @@ class Player():
             self.dir = self.dir.rotate(-5)
         if controls["thrust"]:
             self.accel=speed*dt*self.dir
-            # self.thrust.play()
+            self.channel.play(self.thrust)
         self.vel = self.vel+self.accel
         self.pos+=self.vel
         if self.pos[0] < 0:
@@ -55,9 +57,10 @@ class Player():
             return
         dir=180-self.dir.as_polar()[1]
         if self.accel.magnitude() == 0.0:
-            self.screen.blit(pygame.transform.rotate(self.costumes[0],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
+            sprite = pygame.transform.rotate(self.costumes[0],dir)
         else:
-            self.screen.blit(pygame.transform.rotate(self.costumes[1],dir), (self.pos[0]-(self.size[0]/2),self.pos[1]-(self.size[1]/2)))
+            sprite = pygame.transform.rotate(self.costumes[1],dir)
+        self.screen.blit(sprite, (self.pos[0]-(sprite.get_width()/2),self.pos[1]-(sprite.get_height()/2)))
         # pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5)
 
     def collideAsteroid(self):

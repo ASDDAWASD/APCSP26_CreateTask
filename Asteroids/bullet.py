@@ -3,7 +3,9 @@ from pygame.math import Vector2
 
 pygame.mixer.init()
 bullets=[]
-shoot = pygame.mixer.Sound("Asteroids/assets/SFX/laserShoot.wav")
+ammo = 5
+SFX_shoot = pygame.mixer.Sound("Asteroids/assets/SFX/laserShoot.wav")
+channel = pygame.mixer.Channel(2)
 
 class Bullet():
     def __init__(self,screen,pos,vel):
@@ -11,7 +13,7 @@ class Bullet():
         self.screen = screen
         self.pos = Vector2(pos)
         self.vel = vel
-        shoot.play()
+        channel.play(SFX_shoot)
 
 
     def move(self):
