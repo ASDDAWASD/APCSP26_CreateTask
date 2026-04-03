@@ -63,7 +63,7 @@ PLAYER_DEATH = pygame.USEREVENT + 1
 MAKE_ASTEROID = pygame.USEREVENT + 2
 RELOAD = pygame.USEREVENT + 3
 
-pygame.time.set_timer(MAKE_ASTEROID,8000)
+pygame.time.set_timer(MAKE_ASTEROID,5000)
 
 #instructions screen
 check={pygame.K_UP:0,pygame.K_RIGHT:0,pygame.K_LEFT:0,pygame.K_SPACE:0}
