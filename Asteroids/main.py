@@ -52,7 +52,7 @@ def shoot():
     if bullet.ammo == 0:
         if not reloading:
             reloading = True
-            pygame.time.set_timer(RELOAD, 3000, loops = 1)
+            pygame.time.set_timer(RELOAD, 2000, loops = 1)
 
 
 #initialize player
