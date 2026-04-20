@@ -1,7 +1,6 @@
 import pygame
 from pygame.math import Vector2
 import asteroid
-import math
 pygame.mixer.init()
 PLAYER_DEATH = pygame.USEREVENT + 1
 
@@ -52,7 +51,7 @@ class Player():
         else:
             sprite = pygame.transform.rotate(self.costumes[1],dir)
         self.screen.blit(sprite, (self.pos[0]-(sprite.get_width()/2),self.pos[1]-(sprite.get_height()/2)))
-        # pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5)
+        # pygame.draw.rect(self.screen,(255,0,0),self.hurtbox,5) #draw hitboxes for debugging
 
     def collideAsteroid(self):
         if not self.immune:

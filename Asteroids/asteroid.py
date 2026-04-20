@@ -39,7 +39,7 @@ class Asteroid():
 
     def draw(self):
         self.screen.blit(self.sprite, self.pos)
-        # pygame.draw.rect(self.screen,(255,0,0),self.hitbox,5)
+        # pygame.draw.rect(self.screen,(255,0,0),self.hitbox,5) #draw hitboxes for debugging
 
     def collideBullet(self,checkbullet):
         if self.hitbox.collidepoint(checkbullet.pos):
