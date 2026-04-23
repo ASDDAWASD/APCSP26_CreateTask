@@ -1,3 +1,11 @@
+'''
+all code written by me, referenced pygame documentation at https://www.pygame.org/docs/
+all sprites and costumes drawn on microsoft paint
+all audio files made on https://sfxr.me/
+
+font was externally sourced
+'''
+
 import pygame
 import asteroid
 import player
@@ -18,8 +26,6 @@ points = 0
 font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
 points = 0
 reloading = False
-
-# with open("highscore.txt")
 
 #intialize clock for DT
 clock=pygame.time.Clock()
