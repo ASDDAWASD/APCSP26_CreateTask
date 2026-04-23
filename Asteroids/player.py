@@ -40,6 +40,15 @@ class Player():
             self.channel.play(self.thrust)
         self.vel = self.vel+self.accel
         self.pos+=self.vel
+        if self.pos[0] < 0:
+            self.pos[0] = self.screen.get_width()
+        elif self.pos[0] > self.screen.get_width():
+            self.pos[0] = 0
+        if self.pos[1] < 0:
+            self.pos[1] = self.screen.get_height()
+        elif self.pos[1] > self.screen.get_height():
+            self.pos[1] = 0
+
         self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*self.scale,37*self.scale)
     
     def draw(self):
