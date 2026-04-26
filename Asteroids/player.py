@@ -8,8 +8,8 @@ PLAYER_DEATH = pygame.USEREVENT + 1
 class Player():
     def __init__(self, screen, pos=(0,0), scale = 1):
         self.costumes = [
-            pygame.image.load("Asteroids/assets/sprites/spaceship_IDLE.png").convert_alpha(),
-            pygame.image.load("Asteroids/assets/sprites/spaceship_MOVING.png").convert_alpha()
+            pygame.image.load("assets/sprites/spaceship_IDLE.png").convert_alpha(),
+            pygame.image.load("assets/sprites/spaceship_MOVING.png").convert_alpha()
             ]
         self.costumes[0] = pygame.transform.scale_by(self.costumes[0], scale)
         self.costumes[1] = pygame.transform.scale_by(self.costumes[1], scale)
@@ -23,9 +23,9 @@ class Player():
         self.hurtbox = pygame.rect.Rect(0,0,0,0)
         self.lives = 3
         self.immune = 0
-        self.hurt = pygame.mixer.Sound("Asteroids/assets/SFX/crash.wav")
+        self.hurt = pygame.mixer.Sound("assets/SFX/crash.wav")
         self.channel = pygame.mixer.Channel(0)
-        self.thrust = pygame.mixer.Sound("Asteroids/assets/SFX/thrust.wav")
+        self.thrust = pygame.mixer.Sound("assets/SFX/thrust.wav")
         # self.thrust.set_volume(0.5)
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
@@ -49,7 +49,7 @@ class Player():
         elif self.pos[1] > self.screen.get_height():
             self.pos[1] = 0
 
-        self.hurtbox = pygame.rect.Rect(self.pos[0],self.pos[1],37*self.scale,37*self.scale)
+        self.hurtbox = pygame.rect.Rect(self.pos[0]-(50*self.scale),self.pos[1]-(50*self.scale),100*self.scale,100*self.scale)
     
     def draw(self):
         if (self.immune//10)%2:

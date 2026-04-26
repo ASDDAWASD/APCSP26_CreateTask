@@ -23,7 +23,7 @@ pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 running = True
 points = 0
-font = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
+font = pygame.font.Font("assets/fonts/Minecraft.ttf",60) #font source: https://www.dafont.com/minecraft.font
 points = 0
 reloading = False
 
@@ -73,11 +73,9 @@ PLAYER_DEATH = pygame.USEREVENT + 1
 MAKE_ASTEROID = pygame.USEREVENT + 2
 RELOAD = pygame.USEREVENT + 3
 
-pygame.time.set_timer(MAKE_ASTEROID,5000)
-
 #instructions screen
 check={pygame.K_UP:0,pygame.K_RIGHT:0,pygame.K_LEFT:0,pygame.K_SPACE:0}
-instructions = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30).render("Use arrow keys to move and space to shoot.",True,WHITE)
+instructions = pygame.font.Font("assets/fonts/Minecraft.ttf",30).render("Use arrow keys to move and space to shoot.",True,WHITE)
 while running and 0 in check.values():
     screen.fill(BLACK)
     for event in pygame.event.get():
@@ -116,8 +114,10 @@ while running and 0 in check.values():
     dt=clock.tick(FPS)/1000
 
 #initialize asteroids
-for i in range(5):
+for i in range(8):
     makeAsteroid(scale=0.5,speed=0.5)
+
+pygame.time.set_timer(MAKE_ASTEROID,3000)
 
 #main game loop
 while running:
@@ -129,7 +129,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 shoot()
         if event.type == MAKE_ASTEROID:
-            makeAsteroid(scale=0.5,speed=0.5)
+            makeAsteroid(scale=0.5,speed=1)
         if event.type == RELOAD:
             bullet.ammo = 5
             reloading = False
@@ -141,9 +141,9 @@ while running:
 
     #move objects
     player.move({
-        "thrust":keys[pygame.K_UP],
-        "right":keys[pygame.K_RIGHT],
-        "left":keys[pygame.K_LEFT]
+        "thrust":keys[pygame.K_UP] or keys[pygame.K_w],
+        "right":keys[pygame.K_RIGHT] or keys[pygame.K_d],
+        "left":keys[pygame.K_LEFT] or keys[pygame.K_a]
         },5,dt)
 
     for i in bullet.bullets:
@@ -189,14 +189,14 @@ for i in range(100):
     dt=clock.tick(FPS)/1000
 
 #display game over screen
-with open("Asteroids/highscore.txt","r+") as file:
+with open("highscore.txt","r+") as file:
     highscore = int(file.read())
     if points > highscore:
         highscore = points
         file.seek(0)
         file.truncate()
         file.write(str(highscore))
-    displayhigh = pygame.font.Font("Asteroids/assets/fonts/Minecraft.ttf",30).render(f"High Score: {highscore}",True,WHITE)
+    displayhigh = pygame.font.Font("assets/fonts/Minecraft.ttf",30).render(f"High Score: {highscore}",True,WHITE)
 screen.fill(BLACK)
 score = font.render(f"Game Over! Score: {str(points)}",True,WHITE)
 

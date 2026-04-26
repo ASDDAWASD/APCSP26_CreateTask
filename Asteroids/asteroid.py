@@ -13,13 +13,13 @@ class Asteroid():
         self.idx = len(asteroids)
         self.screen = screen
         self.scale = scale
-        self.sprite = pygame.image.load(f"Asteroids/assets/sprites/asteroid_{random.randint(1,2)}.png").convert_alpha()
+        self.sprite = pygame.image.load(f"assets/sprites/asteroid_{random.randint(1,2)}.png").convert_alpha()
         self.sprite = pygame.transform.scale_by(self.sprite,scale)
         self.pos = Vector2(pos)
         self.vel = Vector2(vel)
         self.hitbox = pygame.Rect(self.pos[0]+(100*scale),self.pos[1]+(100*scale),200*scale,200*scale)
         self.channel = pygame.mixer.Channel(1)
-        self.SFX_pop = [pygame.mixer.Sound("Asteroids/assets/SFX/explosion_1.wav")]
+        self.SFX_pop = [pygame.mixer.Sound("assets/SFX/explosion_1.wav")]
         self.type = type
         
 
