@@ -62,7 +62,7 @@ def shoot():
     if bullet.ammo == 0:
         if not reloading:
             reloading = True
-            pygame.time.set_timer(RELOAD, 2000, loops = 1)
+            pygame.time.set_timer(RELOAD, 1000, loops = 1)
 
 
 #initialize player
@@ -87,18 +87,18 @@ while running and 0 in check.values():
                 check[pygame.K_SPACE]=1
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_UP or pygame.K_w]:
         check[pygame.K_UP] = 1
-    if keys[pygame.K_RIGHT]:
+    if keys[pygame.K_RIGHT or pygame.K_d]:
         check[pygame.K_RIGHT] = 1
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_LEFT or pygame.K_a]:
         check[pygame.K_LEFT] = 1
 
     #move objects
     player.move({
-        "thrust":keys[pygame.K_UP],
-        "right":keys[pygame.K_RIGHT],
-        "left":keys[pygame.K_LEFT]
+        "thrust":keys[pygame.K_UP] or keys[pygame.K_w],
+        "right":keys[pygame.K_RIGHT] or keys[pygame.K_d],
+        "left":keys[pygame.K_LEFT] or keys[pygame.K_a]
         },5,dt)
     for i in bullet.bullets:
         i.move()
