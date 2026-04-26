@@ -33,11 +33,15 @@ FPS = 60
 dt=clock.tick(FPS)/1000
 
 def makeAsteroid(scale=1,speed=1):
+    # generate a random velocity and position on the screen for the asteroid
     spawnx = random.random()*SCREEN_SIZE[0]
     spawny = random.random()*SCREEN_SIZE[1]
     velx = random.uniform(-1,1)*speed
     vely = random.uniform(-1,1)*speed
+
     while True:
+        # move the spawn point backwards along the velocity vector until it is off screen
+        # this system ensures that any asteroids spawned this way will generate off screen and move across the screen
         spawnx-=velx
         spawny-=vely
         if (
@@ -47,7 +51,7 @@ def makeAsteroid(scale=1,speed=1):
             spawny > SCREEN_SIZE[1]+scale
             ):
             break
-    
+    # initialize the asteroid at the new spawn position and add it to the list of asteroids
     asteroid.asteroids.append(asteroid.Asteroid(screen,(spawnx,spawny),(velx,vely),scale))
 
 def shoot():
