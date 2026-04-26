@@ -9,7 +9,7 @@ channel = pygame.mixer.Channel(2)
 
 class Bullet():
     def __init__(self,screen,pos,vel):
-        self.idx = len(bullets)
+        self.idx = len(bullets) # index in bullets list acts as a unique identifier for each bullet
         self.screen = screen
         self.pos = Vector2(pos)
         self.vel = vel
@@ -24,10 +24,10 @@ class Bullet():
             self.pos[0] > self.screen.get_width() or
             self.pos[1] > self.screen.get_height()
             ):
-            for i in bullets:
+            for i in bullets: # update the indices of each existing bullet to account for the removal of this bullet
                 if i.idx > self.idx:
                     i.idx-=1
-            bullets.pop(self.idx)
+            bullets.pop(self.idx) # remove the bullet from the list of bullets if it goes off screen
 
     def draw(self):
         pygame.draw.circle(self.screen,(255,255,255),self.pos,2)

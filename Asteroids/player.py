@@ -12,7 +12,7 @@ class Player():
             pygame.image.load("assets/sprites/spaceship_MOVING.png").convert_alpha()
             ]
         self.costumes[0] = pygame.transform.scale_by(self.costumes[0], scale)
-        self.costumes[1] = pygame.transform.scale_by(self.costumes[1], scale)
+        self.costumes[1] = pygame.transform.scale_by(self.costumes[1], scale) # load and scale the idle and moving player sprites
         self.scale = scale
         self.size = (self.costumes[0].get_size())
         self.pos = Vector2(pos)
@@ -29,18 +29,18 @@ class Player():
         # self.thrust.set_volume(0.5)
 
     def move(self,controls={"thrust":False, "right":False, "left":False},speed=5,dt=0):
-        self.accel*=0
-        self.vel*=0.99
-        if controls["right"]:
+        self.accel*=0 
+        self.vel*=0.99 # apply minimal friction to cap velocity and slowly decelerate
+        if controls["right"]: # update player movement direction
             self.dir = self.dir.rotate(5)
         if controls["left"]:
             self.dir = self.dir.rotate(-5)
-        if controls["thrust"]:
-            self.accel=speed*dt*self.dir
+        if controls["thrust"]: # scales direction by speed and delta time to calculate acceleration vector
+            self.accel=speed*dt*self.dir 
             self.channel.play(self.thrust)
-        self.vel = self.vel+self.accel
-        self.pos+=self.vel
-        if self.pos[0] < 0:
+        self.vel = self.vel+self.accel # adds acceleration to velocity to update velocity vector
+        self.pos+=self.vel # adds velocity to position to update position vector
+        if self.pos[0] < 0: # screen wrapping if player goes off screen
             self.pos[0] = self.screen.get_width()
         elif self.pos[0] > self.screen.get_width():
             self.pos[0] = 0
@@ -66,12 +66,12 @@ class Player():
         if not self.immune:
             for i in asteroid.asteroids:
                 if self.hurtbox.colliderect(i.hitbox):
-                    self.immune = 120
+                    self.immune = 120 # 2 secs of immunity at 60 FPS = 120 frames of immunity
                     self.lives -= 1
                     self.hurt.play()
                     break
         if self.immune > 0:
-            self.immune -= 1
+            self.immune -= 1 # decrement iframes every tick
         if self.lives <= 0:
             pygame.event.post(pygame.event.Event(PLAYER_DEATH))
 
