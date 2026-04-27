@@ -85,6 +85,9 @@ while running and 0 in check.values():
             if event.key == pygame.K_SPACE:
                 shoot()
                 check[pygame.K_SPACE]=1
+        if event.type == RELOAD:
+            bullet.ammo = 5
+            reloading = False
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP or pygame.K_w]:
